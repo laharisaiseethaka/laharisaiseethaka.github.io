@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Sweet Scoops Ice Cream Parlour</title>
-    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for Social Media Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         @keyframes gradientBackground {
@@ -181,7 +178,6 @@
     </style>
 </head>
 <body>
-    <!-- Animated background elements -->
     <div class="scoop" style="top: 10%; left: 5%;"></div>
     <div class="scoop" style="top: 30%; left: 80%; animation-delay: 1s;"></div>
     <div class="scoop" style="top: 70%; left: 15%; animation-delay: 2s;"></div>
@@ -254,7 +250,6 @@
         <p>&copy; 2025 Sweet Scoops Ice Cream Parlour | All Rights Reserved</p>
     </footer>
 
-    <!-- Bootstrap 5 JavaScript CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
@@ -267,20 +262,17 @@
                 event.preventDefault();
                 event.stopPropagation();
                 
-                // Reset validation messages
                 const errorMessages = document.querySelectorAll('.validation-message');
                 errorMessages.forEach(msg => msg.style.display = 'none');
                 
                 let isValid = true;
                 
-                // Validate name
                 const name = document.getElementById('name');
                 if (name.value.trim() === '') {
                     document.getElementById('nameError').style.display = 'block';
                     isValid = false;
                 }
                 
-                // Validate email
                 const email = document.getElementById('email');
                 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 if (email.value.trim() === '' || !emailPattern.test(email.value)) {
@@ -288,14 +280,12 @@
                     isValid = false;
                 }
                 
-                // Validate subject
                 const subject = document.getElementById('subject');
                 if (!subject.value) {
                     document.getElementById('subjectError').style.display = 'block';
                     isValid = false;
                 }
                 
-                // Validate message
                 const message = document.getElementById('message');
                 if (message.value.trim() === '') {
                     document.getElementById('messageError').style.display = 'block';
@@ -303,12 +293,10 @@
                 }
                 
                 if (isValid) {
-                    // In a real application, you would send the form data to a server here
-                    // For demonstration, we'll just show the success message
+
                     form.style.display = 'none';
                     successMessage.style.display = 'block';
-                    
-                    // Reset form after 5 seconds
+
                     setTimeout(() => {
                         form.reset();
                         form.style.display = 'block';
@@ -319,7 +307,7 @@
                 form.classList.add('was-validated');
             });
             
-            // Real-time validation for email field
+
             document.getElementById('email').addEventListener('input', function() {
                 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 if (this.value.trim() !== '' && !emailPattern.test(this.value)) {
