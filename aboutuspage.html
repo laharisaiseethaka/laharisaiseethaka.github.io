@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Sweet Scoops Ice Cream Parlour</title>
     <style>
@@ -250,7 +249,7 @@
 </head>
 <body>
 
-    <!-- Animated Background Elements -->
+   
     <div class="ice-cream-bg" id="iceCreamBg"></div>
 
     <header>
@@ -258,7 +257,6 @@
     </header>
 
     <div class="content-container">
-        <!-- About Us Section -->
         <section class="about-section">
             <div class="about-text">
                 <h2>Our Story</h2>
@@ -271,7 +269,6 @@
             </div>
         </section>
 
-        <!-- Our Values Section -->
         <section class="values-section">
             <h3>Our Core Values</h3>
             <div class="values-grid">
@@ -305,7 +302,6 @@
             const iceCreamIcons = ['🍦', '🍨', '🍧', '🥄', '🧁', '🍩', '🍪', '🎂'];
             const colors = ['#FFB6C1', '#FFD700', '#98FB98', '#87CEFA', '#FFA07A', '#EE82EE', '#FF6347', '#40E0D0'];
             
-            // Create floating ice creams
             for (let i = 0; i < 6; i++) {
                 const floating = document.createElement('div');
                 floating.className = 'floating-ice-cream';
@@ -318,7 +314,6 @@
                 bgContainer.appendChild(floating);
             }
             
-            // Create falling ice creams
             function createFallingIceCream() {
                 const falling = document.createElement('div');
                 falling.className = 'ice-cream-icon';
@@ -329,16 +324,14 @@
                 falling.style.fontSize = `${12 + Math.random() * 12}px`;
                 bgContainer.appendChild(falling);
                 
-                // Remove element after animation completes
                 setTimeout(() => {
                     falling.remove();
                 }, 15000);
             }
             
-            // Create falling ice creams periodically
             setInterval(createFallingIceCream, 1000);
             
-            // Initial batch
+      
             for (let i = 0; i < 10; i++) {
                 setTimeout(createFallingIceCream, i * 500);
             }
