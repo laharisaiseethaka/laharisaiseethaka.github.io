@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ice Cream Parlour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(270deg, #e6f7ff, #b3e0ff, #66c2ff, #3399ff);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .scoop {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float 5s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 105, 148, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+            border: 2px solid #006994;
+            margin: 20px 0;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-pic-container {
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #e6f7ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 3px solid #006994;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-pic-placeholder {
+            font-size: 40px;
+            color: #006994;
+        }
+
+        .profile-pic-upload {
+            display: none;
+        }
+
+        h1 {
+            color: #006994;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #006994;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .input-container {
+            margin: 20px 0;
+            text-align: left;
+            position: relative;
+        }
+
+        label {
+            font-size: 0.95rem;
+            color: #006994;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            margin-top: 5px;
+            border: 1px solid #006994;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #0088cc;
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.2);
+            outline: none;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: #006994;
+        }
+
+        button {
+            background-color: #006994;
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0088cc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 105, 148, 0.3);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .forgot-password {
+            margin-top: 20px;
+        }
+
+        .forgot-password a {
+            color: #006994;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .forgot-password a:hover {
+            color: #0088cc;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: #006994;
+            z-index: 2;
+        }
+
+        .input-error {
+            border-color: #dc3545 !important;
+        }
+
+        .input-success {
+            border-color: #28a745 !important;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            p {
+                font-size: 0.95rem;
+            }
+            
+            input {
+                padding: 10px 35px 10px 12px;
+                font-size: 0.95rem;
+            }
+            
+            button {
+                padding: 12px;
+                font-size: 1rem;
+            }
+            
+            .profile-pic-container {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .profile-pic-placeholder {
+                font-size: 36px;
+            }
+            
+            .input-icon, .password-toggle {
+                top: 37px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .login-container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .profile-pic-container {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .profile-pic-placeholder {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="scoop" style="top: 10%; left: 5%;"></div>
+    <div class="scoop" style="top: 30%; left: 80%; animation-delay: 1s;"></div>
+    <div class="scoop" style="top: 70%; left: 15%; animation-delay: 2s;"></div>
+    <div class="scoop" style="top: 50%; left: 70%; animation-delay: 3s;"></div>
+
+    <!-- Main Login Form -->
+    <div class="login-container" id="loginContainer">
+        <div class="profile-pic-container" id="profilePicContainer" onclick="document.getElementById('profilePicUpload').click()">
+            <div class="profile-pic-placeholder" id="profilePicPlaceholder">
+                <i class="fas fa-user"></i>
+            </div>
+            <img id="profilePic" class="profile-pic" style="display: none;">
+            <input type="file" id="profilePicUpload" class="profile-pic-upload" accept="image/*">
+        </div>
+
+        <h1>Welcome Back!</h1>
+        <p>Please login to your account</p>
+
+        <form id="loginForm">
+            <div class="input-container">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <i class="fas fa-envelope input-icon"></i>
+                <div id="emailError" class="error-message"></div>
+            </div>
+
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <i class="fas fa-lock input-icon"></i>
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                <div id="passwordError" class="error-message"></div>
+            </div>
+
+            <div class="input-container" style="display: none;" id="confirmPasswordContainer">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+                <i class="fas fa-lock input-icon"></i>
+                <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+                <div id="confirmPasswordError" class="error-message"></div>
+            </div>
+
+            <button type="submit" id="submitButton">Login</button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="#" id="toggleForm">Don't have an account? Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const confirmPasswordContainer = document.getElementById('confirmPasswordContainer');
+        const toggleFormLink = document.getElementById('toggleForm');
+        const submitButton = document.getElementById('submitButton');
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const profilePicUpload = document.getElementById('profilePicUpload');
+        const profilePic = document.getElementById('profilePic');
+        const profilePicPlaceholder = document.getElementById('profilePicPlaceholder');
+        
+        // Form state (login/signup)
+        let isLoginForm = true;
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        if (toggleConfirmPassword) {
+            toggleConfirmPassword.addEventListener('click', function() {
+                const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPasswordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        // Toggle between login and signup forms
+        toggleFormLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            isLoginForm = !isLoginForm;
+            
+            // Reset form and errors when toggling
+            loginForm.reset();
+            clearErrors();
+            
+            if (isLoginForm) {
+                submitButton.textContent = 'Login';
+                toggleFormLink.textContent = "Don't have an account? Sign up";
+                confirmPasswordContainer.style.display = 'none';
+                document.querySelector('h1').textContent = 'Welcome Back!';
+                document.querySelector('p').textContent = 'Please login to your account';
+                
+                // Reset profile pic if it was changed
+                profilePic.style.display = 'none';
+                profilePicPlaceholder.style.display = 'block';
+                profilePicUpload.value = '';
+            } else {
+                submitButton.textContent = 'Sign Up';
+                toggleFormLink.textContent = 'Already have an account? Login';
+                confirmPasswordContainer.style.display = 'block';
+                document.querySelector('h1').textContent = 'Create Account';
+                document.querySelector('p').textContent = 'Join our sweet community';
+            }
+            
+            // Enable the submit button
+            submitButton.disabled = false;
+        });
+
+        // Profile picture upload
+        profilePicUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPEG, PNG, GIF)');
+                    return;
+                }
+                
+                // Validate file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Image size should be less than 2MB');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    profilePic.src = event.target.result;
+                    profilePic.style.display = 'block';
+                    profilePicPlaceholder.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Clear all error messages
+        function clearErrors() {
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+            
+            emailInput.classList.remove('input-error', 'input-success');
+            passwordInput.classList.remove('input-error', 'input-success');
+            confirmPasswordInput.classList.remove('input-error', 'input-success');
+        }
+
+        // Validate email
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            
+            if (!email) {
+                emailInput.classList.add('input-error');
+                document.getElementById('emailError').textContent = 'Email is required';
+                return false;
+            } else if (!emailPattern.test(email)) {
+                emailInput.classList.add('input-error');
+                document.getElementById('emailError').textContent = 'Please enter a valid email';
+                return false;
+            } else {
+                emailInput.classList.remove('input-error');
+                emailInput.classList.add('input-success');
+                document.getElementById('emailError').textContent = '';
+                return true;
+            }
+        }
+
+        // Validate password
+        function validatePassword() {
+            const password = passwordInput.value.trim();
+            
+            if (!password) {
+                passwordInput.classList.add('input-error');
+                document.getElementById('passwordError').textContent = 'Password is required';
+                return false;
+            } else if (password.length < 8) {
+                passwordInput.classList.add('input-error');
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters';
+                return false;
+            } else {
+                passwordInput.classList.remove('input-error');
+                passwordInput.classList.add('input-success');
+                document.getElementById('passwordError').textContent = '';
+                return true;
+            }
+        }
+
+        // Validate confirm password (for signup)
+        function validateConfirmPassword() {
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+            
+            if (!confirmPassword) {
+                confirmPasswordInput.classList.add('input-error');
+                document.getElementById('confirmPasswordError').textContent = 'Please confirm your password';
+                return false;
+            } else if (password !== confirmPassword) {
+                confirmPasswordInput.classList.add('input-error');
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                return false;
+            } else {
+                confirmPasswordInput.classList.remove('input-error');
+                confirmPasswordInput.classList.add('input-success');
+                document.getElementById('confirmPasswordError').textContent = '';
+                return true;
+            }
+        }
+
+        // Real-time validation as user types
+        emailInput.addEventListener('input', function() {
+            validateEmail();
+        });
+
+        passwordInput.addEventListener('input', function() {
+            validatePassword();
+            if (!isLoginForm && confirmPasswordInput.value) {
+                validateConfirmPassword();
+            }
+        });
+
+        if (confirmPasswordInput) {
+            confirmPasswordInput.addEventListener('input', function() {
+                validateConfirmPassword();
+            });
+        }
+
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate all fields
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+            let isConfirmPasswordValid = true;
+            
+            if (!isLoginForm) {
+                isConfirmPasswordValid = validateConfirmPassword();
+            }
+            
+            if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+                // Disable the submit button to prevent multiple submissions
+                submitButton.disabled = true;
+                submitButton.textContent = isLoginForm ? 'Logging in...' : 'Creating account...';
+                
+                // Simulate API call (in a real app, you would use fetch or axios)
+                setTimeout(() => {
+                    alert(isLoginForm ? 'Login successful!' : 'Account created successfully!');
+                    loginForm.reset();
+                    clearErrors();
+                    
+                    // Reset profile pic if in signup mode
+                    if (!isLoginForm) {
+                        profilePic.style.display = 'none';
+                        profilePicPlaceholder.style.display = 'block';
+                        profilePicUpload.value = '';
+                    }
+                    
+                    // Reset the submit button
+                    submitButton.disabled = false;
+                    submitButton.textContent = isLoginForm ? 'Login' : 'Sign Up';
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Sweet Scoops Ice Cream Parlour</title>
+    <style>
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes falling {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(270deg, #e6f7ff, #b3e0ff, #66c2ff, #3399ff);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 60px;
+            overflow-x: hidden;
+        }
+
+        .ice-cream-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ice-cream-icon {
+            position: absolute;
+            font-size: 24px;
+            animation: falling linear infinite;
+        }
+
+        .floating-ice-cream {
+            position: absolute;
+            font-size: 40px;
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        header {
+            background-color: rgba(0, 105, 148, 0.9);
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 105, 148, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 280px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text h2 {
+            color: #006994;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            margin-bottom: 15px;
+            border-bottom: 3px solid #006994;
+            padding-bottom: 8px;
+        }
+
+        .about-text p {
+            color: #333;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .values-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .values-section h3 {
+            color: #006994;
+            font-size: clamp(1.6rem, 4vw, 2rem);
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #006994;
+            padding-bottom: 8px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .value-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 105, 148, 0.1);
+            border-left: 5px solid #006994;
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 105, 148, 0.2);
+        }
+
+        .value-card h4 {
+            color: #006994;
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .value-card p {
+            color: #555;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        footer {
+            background-color: rgba(0, 105, 148, 0.9);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            box-shadow: 0 -4px 15px rgba(0, 105, 148, 0.3);
+            z-index: 1;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .about-text, .about-image {
+                width: 100%;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .floating-ice-cream {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 5px;
+            }
+            
+            .content-container {
+                margin: 20px auto;
+                padding: 0 10px;
+            }
+            
+            .about-text {
+                padding: 15px;
+            }
+            
+            .values-section {
+                padding: 20px 15px;
+            }
+            
+            .value-card {
+                padding: 15px;
+            }
+            
+            .floating-ice-cream {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background Elements -->
+    <div class="ice-cream-bg" id="iceCreamBg"></div>
+
+    <header>
+        <h1>Sweet Scoops Ice Cream Parlour</h1>
+    </header>
+
+    <div class="content-container">
+        <!-- About Us Section -->
+        <section class="about-section">
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>Sweet Scoops Ice Cream Parlour started as a small family business with a passion for making the best homemade ice cream in town. What began in a tiny kitchen has grown into a beloved spot where customers can enjoy fresh, creamy, and innovative ice cream flavors.</p>
+                <p>We're committed to using only the finest ingredients to create our desserts, ensuring each scoop is a sweet moment to remember. Our ice cream is crafted in small batches to maintain quality and freshness, with no artificial flavors or preservatives.</p>
+                <p>Our mission is simple: to bring joy to your day with every scoop of ice cream. Whether you're enjoying a classic flavor or trying something new, we promise that each bite will transport you to a world of sweetness and nostalgia.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Our Ice Cream Parlour">
+            </div>
+        </section>
+
+        <!-- Our Values Section -->
+        <section class="values-section">
+            <h3>Our Core Values</h3>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h4>Quality Ingredients</h4>
+                    <p>We source only the finest, freshest ingredients from trusted suppliers to ensure every scoop meets our high standards of excellence.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Innovative Flavors</h4>
+                    <p>Our creative team constantly experiments with new flavor combinations to surprise and delight our customers with unique taste experiences.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Customer Happiness</h4>
+                    <p>We believe every customer deserves a sweet experience, from our friendly service to our carefully crafted ice cream creations.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Community Focus</h4>
+                    <p>We're proud to support local farmers and businesses, and regularly participate in community events and charitable initiatives.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Sweet Scoops Ice Cream Parlour | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bgContainer = document.getElementById('iceCreamBg');
+            const iceCreamIcons = ['🍦', '🍨', '🍧', '🥄', '🧁', '🍩', '🍪', '🎂'];
+            const colors = ['#FFB6C1', '#FFD700', '#98FB98', '#87CEFA', '#FFA07A', '#EE82EE', '#FF6347', '#40E0D0'];
+            
+            // Create floating ice creams
+            for (let i = 0; i < 6; i++) {
+                const floating = document.createElement('div');
+                floating.className = 'floating-ice-cream';
+                floating.textContent = iceCreamIcons[Math.floor(Math.random() * iceCreamIcons.length)];
+                floating.style.left = Math.random() * 100 + 'vw';
+                floating.style.top = Math.random() * 100 + 'vh';
+                floating.style.color = colors[Math.floor(Math.random() * colors.length)];
+                floating.style.animationDuration = (3 + Math.random() * 5) + 's';
+                floating.style.animationDelay = (Math.random() * 3) + 's';
+                bgContainer.appendChild(floating);
+            }
+            
+            // Create falling ice creams
+            function createFallingIceCream() {
+                const falling = document.createElement('div');
+                falling.className = 'ice-cream-icon';
+                falling.textContent = iceCreamIcons[Math.floor(Math.random() * iceCreamIcons.length)];
+                falling.style.left = Math.random() * 100 + 'vw';
+                falling.style.color = colors[Math.floor(Math.random() * colors.length)];
+                falling.style.animationDuration = (5 + Math.random() * 10) + 's';
+                falling.style.fontSize = `${12 + Math.random() * 12}px`;
+                bgContainer.appendChild(falling);
+                
+                // Remove element after animation completes
+                setTimeout(() => {
+                    falling.remove();
+                }, 15000);
+            }
+            
+            // Create falling ice creams periodically
+            setInterval(createFallingIceCream, 1000);
+            
+            // Initial batch
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createFallingIceCream, i * 500);
+            }
+        });
+    </script>
+
+</body>
+</html>

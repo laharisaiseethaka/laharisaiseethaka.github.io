@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Scoops Ice Cream Parlour</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #3a7bd5, #00d2ff, #3a7bd5, #00d2ff);
+            background-size: 400% 400%;
+            min-height: 100vh;
+            color: #333;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1e5799;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: headerPulse 8s ease infinite;
+        }
+
+        @keyframes headerPulse {
+            0% { background-color: #1e5799; }
+            50% { background-color: #2980b9; }
+            100% { background-color: #1e5799; }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Menu Section */
+        .menu-section {
+            margin-bottom: 3rem;
+        }
+
+        .menu-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            animation: textGlow 3s ease infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
+        }
+
+        .menu-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+
+        .menu-item h3 {
+            margin: 0 0 0.5rem 0;
+            color: #1e5799;
+            font-size: 1.3rem;
+        }
+
+        .menu-item p {
+            margin: 0 0 1rem 0;
+            color: #555;
+        }
+
+        .menu-item .price {
+            font-weight: bold;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .add-to-cart-btn {
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Cart Button */
+        .cart-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .cart-btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Cart Page Styles */
+        .cart-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem;
+            box-sizing: border-box;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .cart-header h2 {
+            margin: 0;
+            color: #1e5799;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .close-cart:hover {
+            transform: rotate(90deg);
+            color: #ff6b6b;
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-item-img:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            margin: 0 0 0.5rem 0;
+            color: #1e5799;
+        }
+
+        .cart-item-price {
+            margin: 0 0 0.5rem 0;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .cart-item-options {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-item:hover {
+            color: #ff5252;
+            text-decoration: underline;
+        }
+
+        .cart-summary {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border: 1px solid #ddd;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #1e5799;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .continue-shopping {
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .continue-shopping:hover {
+            background-color: #ccc;
+            transform: translateY(-2px);
+        }
+
+        .checkout-btn {
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem 0;
+            color: #666;
+        }
+
+        /* Customization Modal */
+        .customization-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            overflow-y: auto;
+            padding: 2rem 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: scaleIn 0.3s ease;
+            border: 1px solid #1e5799;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #1e5799;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: #ff6b6b;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1e5799;
+        }
+
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: #1e5799;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(30, 87, 153, 0.2);
+        }
+
+        .checkbox-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .checkbox-group input {
+            margin-right: 0.5rem;
+            accent-color: #1e5799;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .cancel-btn {
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background-color: #ccc;
+            transform: translateY(-2px);
+        }
+
+        .add-to-cart-modal-btn {
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-modal-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            overflow-y: auto;
+            padding: 2rem 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .payment-content {
+            background-color: white;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: scaleIn 0.3s ease;
+            border: 1px solid #1e5799;
+        }
+
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payment-header h2 {
+            margin: 0;
+            color: #1e5799;
+        }
+
+        .close-payment {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .close-payment:hover {
+            transform: rotate(90deg);
+            color: #ff6b6b;
+        }
+
+        .payment-methods {
+            margin-bottom: 2rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #1e5799;
+            background-color: #f5f9ff;
+        }
+
+        .payment-method input[type="radio"] {
+            margin-right: 1rem;
+            accent-color: #1e5799;
+        }
+
+        .payment-method-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            object-fit: contain;
+        }
+
+        .payment-details {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .payment-details.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .back-to-cart {
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-cart:hover {
+            background-color: #ccc;
+            transform: translateY(-2px);
+        }
+
+        .confirm-payment {
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-payment:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Order Confirmation */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1003;
+            overflow-y: auto;
+            padding: 2rem 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .confirmation-content {
+            background-color: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: scaleIn 0.3s ease;
+            border: 1px solid #1e5799;
+            text-align: center;
+        }
+
+        .confirmation-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .confirmation-header h2 {
+            margin: 0 0 1rem 0;
+            color: #1e5799;
+        }
+
+        .confirmation-details {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .confirmation-total {
+            font-weight: bold;
+            color: #1e5799;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .confirmation-message {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .close-confirmation {
+            background-color: #1e5799;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-confirmation:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .cart-item {
+                flex-direction: column;
+            }
+            
+            .cart-item-img {
+                width: 100%;
+                height: 150px;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .payment-content {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .modal-content {
+                padding: 1.25rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .payment-content {
+                padding: 1.25rem;
+            }
+
+            .payment-actions {
+                flex-direction: column;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .menu-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Floating ice cream animation */
+        .floating-ice-cream {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: -1;
+            animation: float 10s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating ice cream elements -->
+    <div class="floating-ice-cream" style="left: 5%; top: 100%; animation-delay: 0s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
+    <div class="floating-ice-cream" style="left: 15%; top: 100%; animation-delay: 2s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
+    <div class="floating-ice-cream" style="left: 25%; top: 100%; animation-delay: 4s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
+    <div class="floating-ice-cream" style="left: 75%; top: 100%; animation-delay: 1s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
+    <div class="floating-ice-cream" style="left: 85%; top: 100%; animation-delay: 3s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
+    <div class="floating-ice-cream" style="left: 95%; top: 100%; animation-delay: 5s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
+
+    <!-- Cart Button -->
+    <button class="cart-btn" onclick="showCartPage()">
+        🛒
+        <span class="cart-count" id="cart-count">0</span>
+    </button>
+
+    <header>
+        <h1>Sweet Scoops Ice Cream Parlour</h1>
+    </header>
+
+    <div class="container">
+        <section class="menu-section">
+            <div class="menu-title">
+                <h2>Our Delicious Ice Cream Menu</h2>
+                <p>All our ice creams are made with premium ingredients and love!</p>
+            </div>
+
+            <div class="menu-grid">
+                <!-- Menu Item 1 -->
+                <div class="menu-item">
+                    <img src="https://www.coldlove.in/cdn/shop/products/vanilaaah-cold-love-ice-cream.jpg?v=1723026418&width=1445" alt="Vanilla Ice Cream" width="200" height="200">
+                    <div class="menu-item-content">
+                        <h3>Classic Vanilla</h3>
+                        <p>A creamy and classic flavor made from the finest vanilla beans.</p>
+                        <span class="price">₹45.49</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Classic Vanilla', 49.49)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 2 -->
+                <div class="menu-item">
+                    <img src="https://www.milkmaid.in/sites/default/files/2022-12/Chocolate-Ice-Cream-335x300.jpg" alt="Chocolate Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Decadent Chocolate</h3>
+                        <p>Rich, creamy chocolate ice cream, made with the finest cocoa.</p>
+                        <span class="price">₹51.49</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Decadent Chocolate', 49.49)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 3 -->
+                <div class="menu-item">
+                    <img src="https://www.milkmaid.in/sites/default/files/2023-07/Strawberry-Ice-Cream-335x300_2_11zon_11zon.jpeg" alt="Strawberry Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Fresh Strawberry</h3>
+                        <p>Fresh and fruity strawberry ice cream, made with real strawberries.</p>
+                        <span class="price">₹59.29</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Fresh Strawberry', 59.29)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 4 -->
+                <div class="menu-item">
+                    <img src="https://cleanfoodcrush.com/wp-content/uploads/2021/09/clean-eating-simple-Homemade-Mint-Chocolate-Chip-Ice-Cream-recipe.jpg" alt="Mint Chocolate Chip">
+                    <div class="menu-item-content">
+                        <h3>Mint Chocolate Chip</h3>
+                        <p>Cool mint ice cream with rich chocolate chips throughout.</p>
+                        <span class="price">₹79</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Mint Chocolate Chip', 79)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 5 -->
+                <div class="menu-item">
+                    <img src="https://www.kingarthurbaking.com/sites/default/files/styles/featured_image/public/2022-05/cookies-and-cream-ice-cream_0422.jpg?itok=-gxLG1uG" alt="Cookies and Cream Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Cookies and Cream</h3>
+                        <p>A rich vanilla ice cream with crunchy cookie pieces.</p>
+                        <span class="price">₹53.99</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Cookies and Cream', 53.99)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 6 -->
+                <div class="menu-item">
+                    <img src="https://www.sharmispassions.com/wp-content/uploads/2017/04/PistaIcecream2-475x500.jpg" alt="Pistachio Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Pistachio</h3>
+                        <p>A nutty pistachio flavor with roasted pistachio chunks.</p>
+                        <span class="price">₹39.29</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Pistachio', 39.29)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 7 -->
+                <div class="menu-item">
+                    <img src="https://www.indianhealthyrecipes.com/wp-content/uploads/2022/04/mango-ice-cream-recipe.jpg" alt="Mango Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Tropical Mango</h3>
+                        <p>Sweet and tangy mango ice cream made with real mango pulp.</p>
+                        <span class="price">₹65.99</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Tropical Mango', 65.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Menu Item 8 -->
+                <div class="menu-item">
+                    <img src="https://www.yourhomebasedmom.com/wp-content/uploads/2022/07/Blueberry-ice-cream-5-500x375.jpg" alt="Blueberry Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Blueberry</h3>
+                        <p>Sweet and blueberry ice cream made with tasty berries.</p>
+                        <span class="price">₹55.99</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Blueberry', 55.99)">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Menu Item 9 -->
+                <div class="menu-item">
+                    <img src="https://www.benandjerry.com.au/files/live/sites/systemsite/files/US%20and%20Global%20Assets/Flavors/Product%20Assets/US/coffee_coffee_buzzbuzzbuzz_ice_cream/1920x1920__0057_CoffeeCoffeeBuzzBuzzBuzz_RGB_bulk.png" alt="Coffee Ice Cream">
+                    <div class="menu-item-content">
+                        <h3>Coffee Buzz</h3>
+                        <p>Rich coffee flavored ice cream with a caffeine kick.</p>
+                        <span class="price">₹69.99</span>
+                        <button class="add-to-cart-btn" onclick="showCustomizationModal('Coffee Buzz', 69.99)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cart-page" class="cart-page">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" onclick="hideCartPage()">×</button>
+        </div>
+        
+        <div id="cart-items-container" class="cart-items">
+            <!-- Cart items will be inserted here -->
+        </div>
+        
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-amount">₹0.00</span>
+            </div>
+            
+            <div class="cart-actions">
+                <button class="continue-shopping" onclick="hideCartPage()">Continue Shopping</button>
+                <button class="checkout-btn" onclick="showPaymentModal()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customization Modal -->
+    <div id="customization-modal" class="customization-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-product-name">Customize Your Order</h2>
+                <button class="close-modal" onclick="hideCustomizationModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <input type="hidden" id="modal-product-price">
+                
+                <div class="form-group">
+                    <label for="size">Select Size:</label>
+                    <select id="size">
+                        <option value="small">Small (+₹10.00)</option>
+                        <option value="medium" selected>Medium (+₹15.00)</option>
+                        <option value="large">Large (+₹20.00)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Add Toppings (₹5.00 each):</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="topping-chocolate" value="Chocolate Sauce">
+                        <label for="topping-chocolate">Chocolate Sauce</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="topping-sprinkles" value="Rainbow Sprinkles">
+                        <label for="topping-sprinkles">Rainbow Sprinkles</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="topping-nuts" value="Crushed Nuts">
+                        <label for="topping-nuts">Crushed Nuts</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="topping-whipped" value="Whipped Cream">
+                        <label for="topping-whipped">Whipped Cream</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="special-requests">Special Requests:</label>
+                    <textarea id="special-requests" rows="3" placeholder="Any special instructions or allergies we should know about?"></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="hideCustomizationModal()">Cancel</button>
+                <button class="add-to-cart-modal-btn" onclick="addToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <h2>Select Payment Method</h2>
+                <button class="close-payment" onclick="hidePaymentModal()">×</button>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-method" onclick="selectPaymentMethod('cod')">
+                    <input type="radio" id="cod" name="payment-method" checked>
+                    <label for="cod" class="payment-method-label">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2553/2553155.png" alt="Cash on Delivery" class="payment-icon">
+                        <span>Cash on Delivery</span>
+                    </label>
+                </div>
+                
+                <div class="payment-method" onclick="selectPaymentMethod('upi')">
+                    <input type="radio" id="upi" name="payment-method">
+                    <label for="upi" class="payment-method-label">
+                        <img src="https://cdn-icons-png.flaticon.com/512/825/825454.png" alt="UPI" class="payment-icon">
+                        <span>UPI Payment</span>
+                    </label>
+                </div>
+                
+                <div class="payment-method" onclick="selectPaymentMethod('card')">
+                    <input type="radio" id="card" name="payment-method">
+                    <label for="card" class="payment-method-label">
+                        <img src="https://cdn-icons-png.flaticon.com/512/179/179457.png" alt="Credit/Debit Card" class="payment-icon">
+                        <span>Credit/Debit Card</span>
+                    </label>
+                </div>
+                
+                <div class="payment-method" onclick="selectPaymentMethod('netbanking')">
+                    <input type="radio" id="netbanking" name="payment-method">
+                    <label for="netbanking" class="payment-method-label">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3050/3050150.png" alt="Net Banking" class="payment-icon">
+                        <span>Net Banking</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div id="payment-details" class="payment-details">
+                <!-- Payment details will be shown based on selection -->
+            </div>
+            
+            <div class="payment-actions">
+                <button class="back-to-cart" onclick="backToCart()">Back to Cart</button>
+                <button class="confirm-payment" onclick="confirmPayment()">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="confirmation-modal" class="confirmation-modal">
+        <div class="confirmation-content">
+            <div class="confirmation-icon">✓</div>
+            <div class="confirmation-header">
+                <h2>Order Confirmed!</h2>
+            </div>
+            
+            <div class="confirmation-message">
+                <p>Thank you for your order! Your delicious ice cream will be prepared with love and delivered soon.</p>
+            </div>
+            
+            <div class="confirmation-total">
+                Total Paid: <span id="confirmation-total-amount">₹0.00</span>
+            </div>
+            
+            <div class="confirmation-details">
+                <p><strong>Payment Method:</strong> <span id="confirmation-payment-method">Cash on Delivery</span></p>
+                <p>An order confirmation has been sent to your email.</p>
+            </div>
+            
+            <button class="close-confirmation" onclick="closeConfirmation()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Cart data
+        let cart = [];
+        let currentProduct = {
+            name: "",
+            basePrice: 0,
+            size: "medium",
+            sizePrice: 15.00,
+            toppings: [],
+            toppingsPrice: 0,
+            specialRequests: "",
+            totalPrice: 0
+        };
+
+        let selectedPaymentMethod = "cod";
+
+        // Show customization modal
+        function showCustomizationModal(productName, productPrice) {
+            currentProduct.name = productName;
+            currentProduct.basePrice = productPrice;
+            currentProduct.size = "medium";
+            currentProduct.sizePrice = 15.00;
+            currentProduct.toppings = [];
+            currentProduct.toppingsPrice = 0;
+            currentProduct.specialRequests = "";
+            
+            document.getElementById("modal-product-name").textContent = `Customize ${productName}`;
+            document.getElementById("modal-product-price").value = productPrice;
+            document.getElementById("size").value = "medium";
+            document.getElementById("topping-chocolate").checked = false;
+            document.getElementById("topping-sprinkles").checked = false;
+            document.getElementById("topping-nuts").checked = false;
+            document.getElementById("topping-whipped").checked = false;
+            document.getElementById("special-requests").value = "";
+            
+            document.getElementById("customization-modal").style.display = "block";
+        }
+
+        // Hide customization modal
+        function hideCustomizationModal() {
+            document.getElementById("customization-modal").style.display = "none";
+        }
+
+        // Show cart page
+        function showCartPage() {
+            renderCartItems();
+            document.getElementById("cart-page").style.display = "block";
+        }
+
+        // Hide cart page
+        function hideCartPage() {
+            document.getElementById("cart-page").style.display = "none";
+        }
+
+        // Show payment modal
+        function showPaymentModal() {
+            if (cart.length === 0) {
+                alert("Your cart is empty. Add some items before checkout.");
+                return;
+            }
+            
+            document.getElementById("payment-modal").style.display = "block";
+            updatePaymentDetails();
+        }
+
+        // Hide payment modal
+        function hidePaymentModal() {
+            document.getElementById("payment-modal").style.display = "none";
+        }
+
+        // Back to cart from payment modal
+        function backToCart() {
+            hidePaymentModal();
+            showCartPage();
+        }
+
+        // Select payment method
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            document.getElementById(method).checked = true;
+            updatePaymentDetails();
+        }
+
+        // Update payment details based on selected method
+        function updatePaymentDetails() {
+            const paymentDetails = document.getElementById("payment-details");
+            let detailsHTML = "";
+            
+            switch(selectedPaymentMethod) {
+                case "cod":
+                    detailsHTML = `
+                        <p>Pay with cash when your order is delivered.</p>
+                        <p>Please have exact change ready for the delivery person.</p>
+                    `;
+                    break;
+                case "upi":
+                    detailsHTML = `
+                        <div class="form-group">
+                            <label for="upi-id">UPI ID:</label>
+                            <input type="text" id="upi-id" class="form-control" placeholder="yourname@upi">
+                        </div>
+                        <p>You will be redirected to your UPI app to complete the payment.</p>
+                    `;
+                    break;
+                case "card":
+                    detailsHTML = `
+                        <div class="form-group">
+                            <label for="card-number">Card Number:</label>
+                            <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-expiry">Expiry Date:</label>
+                            <input type="text" id="card-expiry" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cvv">CVV:</label>
+                            <input type="text" id="card-cvv" class="form-control" placeholder="123">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-name">Name on Card:</label>
+                            <input type="text" id="card-name" class="form-control" placeholder="Your Name">
+                        </div>
+                    `;
+                    break;
+                case "netbanking":
+                    detailsHTML = `
+                        <div class="form-group">
+                            <label for="bank-select">Select Bank:</label>
+                            <select id="bank-select" class="form-control">
+                                <option value="">-- Select Bank --</option>
+                                <option value="sbi">State Bank of India</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">Axis Bank</option>
+                                <option value="pnb">Punjab National Bank</option>
+                            </select>
+                        </div>
+                        <p>You will be redirected to your bank's website to complete the payment.</p>
+                    `;
+                    break;
+            }
+            
+            paymentDetails.innerHTML = detailsHTML;
+            paymentDetails.classList.add("active");
+        }
+
+        // Confirm payment
+        function confirmPayment() {
+            // In a real application, you would process the payment here
+            // For this demo, we'll just show the confirmation
+            
+            // Calculate total
+            let total = 0;
+            cart.forEach(item => {
+                total += item.totalPrice;
+            });
+            
+            // Get payment method name
+            let paymentMethodName = "";
+            switch(selectedPaymentMethod) {
+                case "cod": paymentMethodName = "Cash on Delivery"; break;
+                case "upi": paymentMethodName = "UPI Payment"; break;
+                case "card": paymentMethodName = "Credit/Debit Card"; break;
+                case "netbanking": paymentMethodName = "Net Banking"; break;
+            }
+            
+            // Update confirmation modal
+            document.getElementById("confirmation-total-amount").textContent = `₹${total.toFixed(2)}`;
+            document.getElementById("confirmation-payment-method").textContent = paymentMethodName;
+            
+            // Hide payment modal and show confirmation
+            hidePaymentModal();
+            document.getElementById("confirmation-modal").style.display = "block";
+            
+            // Clear cart
+            cart = [];
+            updateCartCount();
+        }
+
+        // Close confirmation modal
+        function closeConfirmation() {
+            document.getElementById("confirmation-modal").style.display = "none";
+            hideCartPage();
+        }
+
+        // Add item to cart
+        function addToCart() {
+            // Get selected size
+            currentProduct.size = document.getElementById("size").value;
+            
+            // Calculate size price
+            switch(currentProduct.size) {
+                case "small": currentProduct.sizePrice = 10.00; break;
+                case "medium": currentProduct.sizePrice = 15.00; break;
+                case "large": currentProduct.sizePrice = 20.00; break;
+            }
+            
+            // Get selected toppings
+            currentProduct.toppings = [];
+            if (document.getElementById("topping-chocolate").checked) {
+                currentProduct.toppings.push("Chocolate Sauce");
+            }
+            if (document.getElementById("topping-sprinkles").checked) {
+                currentProduct.toppings.push("Rainbow Sprinkles");
+            }
+            if (document.getElementById("topping-nuts").checked) {
+                currentProduct.toppings.push("Crushed Nuts");
+            }
+            if (document.getElementById("topping-whipped").checked) {
+                currentProduct.toppings.push("Whipped Cream");
+            }
+            
+            // Calculate toppings price
+            currentProduct.toppingsPrice = currentProduct.toppings.length * 5.00;
+            
+            // Get special requests
+            currentProduct.specialRequests = document.getElementById("special-requests").value;
+            
+            // Calculate total price
+            currentProduct.totalPrice = currentProduct.basePrice + currentProduct.sizePrice + currentProduct.toppingsPrice;
+            
+            // Add to cart
+            cart.push({...currentProduct});
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Hide modal
+            hideCustomizationModal();
+            
+            // Show cart page
+            showCartPage();
+        }
+
+        // Remove item from cart
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            renderCartItems();
+        }
+
+        // Render cart items
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById("cart-items-container");
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty. Add some delicious ice cream!</div>';
+                document.getElementById("cart-total-amount").textContent = "₹0.00";
+                return;
+            }
+            
+            let cartItemsHTML = "";
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                total += item.totalPrice;
+                
+                cartItemsHTML += `
+                    <div class="cart-item">
+                        <img src="${getProductImage(item.name)}" alt="${item.name}" class="cart-item-img">
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-name">${item.name}</h3>
+                            <p class="cart-item-price">₹${item.totalPrice.toFixed(2)}</p>
+                            <p class="cart-item-options">
+                                <strong>Size:</strong> ${item.size.charAt(0).toUpperCase() + item.size.slice(1)}<br>
+                                <strong>Toppings:</strong> ${item.toppings.length > 0 ? item.toppings.join(", ") : "None"}<br>
+                                <strong>Notes:</strong> ${item.specialRequests || "None"}
+                            </p>
+                            <button class="remove-item" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = cartItemsHTML;
+            document.getElementById("cart-total-amount").textContent = `₹${total.toFixed(2)}`;
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const countElement = document.getElementById("cart-count");
+            countElement.textContent = cart.length;
+            
+            // Add bounce animation
+            countElement.style.animation = 'none';
+            void countElement.offsetWidth; // Trigger reflow
+            countElement.style.animation = 'bounce 0.5s ease';
+        }
+
+        // Helper function to get product image
+        function getProductImage(productName) {
+            const productImages = {
+                "Classic Vanilla": "https://www.theroastedroot.net/wp-content/uploads/2023/06/dairy-free-vanilla-ice-cream-8-500x500.jpg",
+                "Decadent Chocolate": "https://www.milkmaid.in/sites/default/files/2022-12/Chocolate-Ice-Cream-335x300.jpg",
+                "Fresh Strawberry": "https://www.milkmaid.in/sites/default/files/2023-07/Strawberry-Ice-Cream-335x300_2_11zon_11zon.jpeg",
+                "Mint Chocolate Chip": "https://cleanfoodcrush.com/wp-content/uploads/2021/09/clean-eating-simple-Homemade-Mint-Chocolate-Chip-Ice-Cream-recipe.jpg",
+                "Cookies and Cream": "https://www.kingarthurbaking.com/sites/default/files/styles/featured_image/public/2022-05/cookies-and-cream-ice-cream_0422.jpg?itok=-gxLG1uG",
+                "Pistachio": "https://www.sharmispassions.com/wp-content/uploads/2017/04/PistaIcecream2-475x500.jpg",
+                "Tropical Mango": "https://www.indianhealthyrecipes.com/wp-content/uploads/2022/04/mango-ice-cream-recipe.jpg",
+                "Coffee Buzz": "https://www.vegrecipesofindia.com/wp-content/uploads/2021/07/coffee-ice-cream-1.jpg",
+                "Blueberry": "https://www.yourhomebasedmom.com/wp-content/uploads/2022/07/Blueberry-ice-cream-5-500x375.jpg"
+            };
+            
+            return productImages[productName] || "https://via.placeholder.com/150";
+        }
+    </script>
+</body>
+</html>
