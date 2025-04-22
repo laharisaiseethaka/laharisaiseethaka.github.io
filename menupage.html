@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sweet Scoops Ice Cream Parlour</title>
     <style>
-        /* Base Styles */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -29,7 +27,6 @@
             }
         }
 
-        /* Header Styles */
         header {
             background-color: #1e5799;
             color: white;
@@ -51,7 +48,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Main Content Styles */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -64,7 +60,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Menu Section */
         .menu-section {
             margin-bottom: 3rem;
         }
@@ -844,7 +839,6 @@
     </style>
 </head>
 <body>
-    <!-- Floating ice cream elements -->
     <div class="floating-ice-cream" style="left: 5%; top: 100%; animation-delay: 0s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
     <div class="floating-ice-cream" style="left: 15%; top: 100%; animation-delay: 2s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
     <div class="floating-ice-cream" style="left: 25%; top: 100%; animation-delay: 4s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
@@ -852,7 +846,6 @@
     <div class="floating-ice-cream" style="left: 85%; top: 100%; animation-delay: 3s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
     <div class="floating-ice-cream" style="left: 95%; top: 100%; animation-delay: 5s; background-image: url('https://cdn-icons-png.flaticon.com/512/2718/2718224.png');"></div>
 
-    <!-- Cart Button -->
     <button class="cart-btn" onclick="showCartPage()">
         🛒
         <span class="cart-count" id="cart-count">0</span>
@@ -870,7 +863,6 @@
             </div>
 
             <div class="menu-grid">
-                <!-- Menu Item 1 -->
                 <div class="menu-item">
                     <img src="https://www.coldlove.in/cdn/shop/products/vanilaaah-cold-love-ice-cream.jpg?v=1723026418&width=1445" alt="Vanilla Ice Cream" width="200" height="200">
                     <div class="menu-item-content">
@@ -881,7 +873,6 @@
                     </div>
                 </div>
 
-                <!-- Menu Item 2 -->
                 <div class="menu-item">
                     <img src="https://www.milkmaid.in/sites/default/files/2022-12/Chocolate-Ice-Cream-335x300.jpg" alt="Chocolate Ice Cream">
                     <div class="menu-item-content">
@@ -892,7 +883,6 @@
                     </div>
                 </div>
 
-                <!-- Menu Item 3 -->
                 <div class="menu-item">
                     <img src="https://www.milkmaid.in/sites/default/files/2023-07/Strawberry-Ice-Cream-335x300_2_11zon_11zon.jpeg" alt="Strawberry Ice Cream">
                     <div class="menu-item-content">
@@ -924,8 +914,6 @@
                         <button class="add-to-cart-btn" onclick="showCustomizationModal('Cookies and Cream', 53.99)">Add to Cart</button>
                     </div>
                 </div>
-
-                <!-- Menu Item 6 -->
                 <div class="menu-item">
                     <img src="https://www.sharmispassions.com/wp-content/uploads/2017/04/PistaIcecream2-475x500.jpg" alt="Pistachio Ice Cream">
                     <div class="menu-item-content">
@@ -936,7 +924,6 @@
                     </div>
                 </div>
 
-                <!-- Menu Item 7 -->
                 <div class="menu-item">
                     <img src="https://www.indianhealthyrecipes.com/wp-content/uploads/2022/04/mango-ice-cream-recipe.jpg" alt="Mango Ice Cream">
                     <div class="menu-item-content">
@@ -946,7 +933,6 @@
                         <button class="add-to-cart-btn" onclick="showCustomizationModal('Tropical Mango', 65.99)">Add to Cart</button>
                     </div>
                 </div>
-                <!-- Menu Item 8 -->
                 <div class="menu-item">
                     <img src="https://www.yourhomebasedmom.com/wp-content/uploads/2022/07/Blueberry-ice-cream-5-500x375.jpg" alt="Blueberry Ice Cream">
                     <div class="menu-item-content">
@@ -969,8 +955,6 @@
             </div>
         </section>
     </div>
-
-    <!-- Cart Page -->
     <div id="cart-page" class="cart-page">
         <div class="cart-header">
             <h2>Your Cart</h2>
@@ -978,7 +962,7 @@
         </div>
         
         <div id="cart-items-container" class="cart-items">
-            <!-- Cart items will be inserted here -->
+
         </div>
         
         <div class="cart-summary">
@@ -994,7 +978,6 @@
         </div>
     </div>
 
-    <!-- Customization Modal -->
     <div id="customization-modal" class="customization-modal">
         <div class="modal-content">
             <div class="modal-header">
